@@ -52,11 +52,14 @@ def generate_pdf(expenses):
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, txt="Expense Report", ln=True, align='C')
     pdf.ln(10)
+
     for row in expenses:
         line = f"Date: {row[0]}, Amount: R{row[1]}, Category: {row[2]}, Note: {row[3]}"
         pdf.multi_cell(0, 10, line)
+
     output = BytesIO()
-    pdf.output(output)
+    pdf_output = pdf.output(dest='S').encode('latin-1')
+    output.write(pdf_output)
     output.seek(0)
     return output
 
